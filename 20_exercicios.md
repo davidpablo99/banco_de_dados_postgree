@@ -144,6 +144,3 @@ Aqui está uma lista com **20 exercícios SQL** que abrangem vários conceitos, 
     LIMIT 1;
     ```
 
----
-
-Esses exercícios devem ajudar a consolidar seus conhecimentos de SQL. Se quiser personalizar ou ajustar algo, é só avisar!
