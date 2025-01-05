@@ -1,0 +1,62 @@
+comandos para treinamento
+
+
+
+1. Listar todos os clientes e seus pedidos (INNER JOIN)
+SELECT c.Nome AS Cliente, p.PedidoID, p.DataPedido, p.TotalPedido
+FROM Clientes c
+INNER JOIN Pedidos p ON c.ClienteID = p.ClienteID;
+
+
+2. Listar produtos com estoque insuficiente
+SELECT NomeProduto, Estoque
+FROM Produtos
+WHERE Estoque < 10;
+
+
+
+3. Total de vendas por cliente (LEFT JOIN)
+SELECT c.Nome AS Cliente, COALESCE(SUM(p.TotalPedido), 0) AS TotalVendas
+FROM Clientes c
+LEFT JOIN Pedidos p ON c.ClienteID = p.ClienteID
+GROUP BY c.ClienteID;
+
+
+
+4. Produtos que nunca foram vendidos (LEFT EXCLUSIVE JOIN)
+SELECT p.NomeProduto
+FROM Produtos p
+LEFT JOIN ItensPedidos i ON p.ProdutoID = i.ProdutoID
+WHERE i.ProdutoID IS NULL;
+
+
+
+5. Pedidos realizados por clientes de São Paulo
+SELECT c.Nome, p.PedidoID, p.DataPedido, p.TotalPedido
+FROM Clientes c
+INNER JOIN Pedidos p ON c.ClienteID = p.ClienteID
+WHERE c.Cidade = 'São Paulo';
+
+
+
+6. Valor total de itens vendidos por produto
+SELECT p.NomeProduto, SUM(i.Quantidade * i.PrecoUnitario) AS TotalVendido
+FROM Produtos p
+INNER JOIN ItensPedidos i ON p.ProdutoID = i.ProdutoID
+GROUP BY p.ProdutoID, p.NomeProduto;
+
+
+
+7. Clientes que nunca fizeram pedidos (LEFT EXCLUSIVE JOIN)
+SELECT c.Nome, c.Email
+FROM Clientes c
+LEFT JOIN Pedidos p ON c.ClienteID = p.ClienteID
+WHERE p.ClienteID IS NULL;
+
+
+
+8. Pedidos com mais de um item
+SELECT i.PedidoID, COUNT(i.ItemID) AS QuantidadeItens
+FROM ItensPedidos i
+GROUP BY i.PedidoID
+HAVING COUNT(i.ItemID) > 1;
